@@ -3,7 +3,6 @@ import 'home_screen.dart';
 import 'crime_map_screen.dart';
 import 'my_reports_screen.dart';
 import 'profile_screen.dart';
-import 'signup_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -20,7 +19,6 @@ class _MainNavigationState extends State<MainNavigation> {
     CrimeMapScreen(),
     MyReportsScreen(),
     ProfileScreen(),
-    SignupScreen(),
   ];
 
   @override
