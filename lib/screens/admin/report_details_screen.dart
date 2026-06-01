@@ -57,7 +57,7 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
       final response = await http.put(
 
         Uri.parse(
-          "http://localhost:5000/api/reports/update-status/${widget.report["_id"]}",
+          "https://crime-alert.onrender.com/api/reports/update-status/${widget.report["_id"]}",
         ),
 
         headers: {

@@ -29,7 +29,7 @@ class _ManageReportsScreenState extends State<ManageReportsScreen> {
       final response = await http.get(
 
         Uri.parse(
-          "http://localhost:5000/api/reports/all",
+          "https://crime-alert.onrender.com/api/reports/all",
         ),
       );
 

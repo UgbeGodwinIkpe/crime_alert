@@ -29,7 +29,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   Future<void> loadDashboard() async {
     try {
       final response = await http.get(
-        Uri.parse("http://localhost:5000/api/admin/dashboard"),
+        Uri.parse("https://crime-alert.onrender.com/api/admin/dashboard"),
       );
 
       if (response.statusCode == 200) {

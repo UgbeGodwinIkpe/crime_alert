@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ApiService {
-  static const String baseUrl = "http://localhost:5000/api";
+  static const String baseUrl = "https://crime-alert.onrender.com/api";
 
   // 🔐 LOGIN
   static Future<Map<String, dynamic>> login(

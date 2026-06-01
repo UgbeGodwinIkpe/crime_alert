@@ -24,7 +24,7 @@ class _ManageUsersScreenState extends State<ManageUsersScreen> {
 
       final response = await http.get(
         Uri.parse(
-          "http://localhost:5000/api/admin/users",
+          "https://crime-alert.onrender.com/api/admin/users",
         ),
       );
 
@@ -88,7 +88,7 @@ class _ManageUsersScreenState extends State<ManageUsersScreen> {
           await http.delete(
 
         Uri.parse(
-          "http://localhost:5000/api/admin/users/$id",
+          "https://crime-alert.onrender.com/api/admin/users/$id",
         ),
       );
 

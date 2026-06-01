@@ -23,7 +23,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
       final response = await http.get(
         Uri.parse(
-          "http://localhost:5000/api/admin/analytics",
+          "https://crime-alert.onrender.com/api/admin/analytics",
         ),
       );
 
