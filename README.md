@@ -1,16 +1,28 @@
-# crime_alert
+# Crime Alert System
 
-A new Flutter project.
+A mobile and web-based crime reporting system developed using Flutter, Node.js, Express.js, and MongoDB.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- User Registration and Login
+- Crime Reporting
+- Crime Map Visualization
+- User Profile Management
+- Admin Dashboard
+- Report Status Management
+- User Management
+- Analytics Dashboard
 
-A few resources to get you started if this is your first Flutter project:
+## Technologies
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Frontend
+- Flutter
+- Dart
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+
+## Authors
+Your Name
