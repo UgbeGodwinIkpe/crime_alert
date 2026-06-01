@@ -7,7 +7,7 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Cidusface Group",
   "license": "ISC",
   "description": "",
   "dependencies": {
