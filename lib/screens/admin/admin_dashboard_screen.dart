@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'analytics_screen.dart';
 import 'manage_reports_screen.dart';
 import 'manage_users_screen.dart';
+import '../login_screen.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
@@ -65,19 +66,82 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     }
     return Scaffold(
       backgroundColor: const Color(0xFFF5F8FC),
-
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-
-        title: const Text(
-          "Admin Dashboard",
-          style: TextStyle(
+        title: const Text("Admin Dashboard", style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
+          ),),
+
+        actions: [
+
+          IconButton(
+            icon: const Icon(Icons.logout),
+
+            onPressed: () {
+
+              showDialog(
+                context: context,
+
+                builder: (_) => AlertDialog(
+
+                  title: const Text(
+                    "Logout",
+                  ),
+
+                  content: const Text(
+                    "Are you sure you want to logout?",
+                  ),
+
+                  actions: [
+
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+
+                      child: const Text(
+                        "Cancel",
+                      ),
+                    ),
+
+                    TextButton(
+                      onPressed: () {
+
+                        Navigator.pushAndRemoveUntil(
+                          context,
+
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                const LoginScreen(),
+                          ),
+
+                          (route) => false,
+                        );
+                      },
+
+                      child: const Text(
+                        "Logout",
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
-        ),
+        ],
       ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Colors.white,
+
+      //   title: const Text(
+      //     "Admin Dashboard",
+      //     style: TextStyle(
+      //       color: Colors.black,
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      // ),
 
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

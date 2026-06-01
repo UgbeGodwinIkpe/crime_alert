@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'about_app_screen.dart';
 import 'edit_profile_screen.dart';
 import 'login_screen.dart';
 import 'help_support_screen.dart';
@@ -291,7 +292,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _profileOption(
               icon: Icons.info_outline,
               title: 'About App',
-              onTap: () {},
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (_) => const AboutAppScreen(),
+                //   ),
+                // );
+              },
             ),
 
             _profileOption(
