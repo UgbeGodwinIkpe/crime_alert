@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 4),
             const Text(
-              'Welcome to CrimeAlert',
+              'Welcome to Crime Alert',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey,
