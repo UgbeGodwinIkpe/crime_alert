@@ -8,6 +8,7 @@ exports.createReport = async (req, res) => {
 
     if (req.file) {
       const mime = req.file.mimetype;
+      console.log({"Medial Mime Type": mime})
 
       if (mime.startsWith("image/")) {
         mediaType = "image";
