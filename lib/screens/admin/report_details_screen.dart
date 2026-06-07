@@ -405,9 +405,9 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
     }
 
     final fullUrl = 'https://crime-alert.onrender.com/$mediaUrl';
-
     // IMAGE
     if (mediaType == "image") {
+      print({mediaType, fullUrl});
       return Image.network(
         fullUrl,
         fit: BoxFit.cover,
