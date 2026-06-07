@@ -197,7 +197,6 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                   _modernCard(
                     title: "Report Information",
                     icon: Icons.info,
-
                     content:
                         "Report ID: ${report["_id"]}\n\nCreated: ${report["createdAt"]}",
                   ),
