@@ -9,6 +9,8 @@ import 'login_screen.dart';
 import 'help_support_screen.dart';
 import 'change_password_screen.dart';
 import 'settings_screen.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -22,6 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String name = "";
   String email = "";
   String phone = "";
+  String location = "Fetching location...";
 
   bool isLoading = true;
 
@@ -29,10 +32,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
 
-    fetchProfile();
+    _fetchProfile();
+    _getLocation();
   }
 
-  Future<void> fetchProfile() async {
+  Future<void> _fetchProfile() async {
 
     try {
 
@@ -47,13 +51,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       final response = await http.get(
         Uri.parse(
-          "http://localhost:5000/api/users/profile/$userId",
+          "https://crime-alert.onrender.com/api/users/profile/$userId",
         ),
       );
 
       if (response.statusCode == 200) {
 
         final data = jsonDecode(response.body);
+        print(data);
 
         setState(() {
 
@@ -71,6 +76,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       setState(() {
         isLoading = false;
+      });
+    }
+  }
+  Future<void> _getLocation() async {
+    try {
+      bool serviceEnabled =
+          await Geolocator.isLocationServiceEnabled();
+
+      if (!serviceEnabled) {
+        setState(() {
+          location = "Location disabled";
+        });
+        return;
+      }
+
+      LocationPermission permission =
+          await Geolocator.checkPermission();
+
+      if (permission == LocationPermission.denied) {
+        permission =
+            await Geolocator.requestPermission();
+      }
+
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        setState(() {
+          location = "Permission denied";
+        });
+        return;
+      }
+
+      Position position =
+          await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      Placemark place = placemarks.first;
+
+      setState(() {
+        location =
+            "${place.locality ?? ''}, ${place.administrativeArea ?? ''}";
+      });
+    } catch (e) {
+      setState(() {
+        location = "Unknown location";
       });
     }
   }
@@ -215,8 +271,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       _infoItem(
                         Icons.location_on,
-                        'Abuja',
+                        location,
                       ),
+                      
                     ],
                   ),
                 ],
@@ -237,7 +294,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   MaterialPageRoute(
 
                     builder: (_) => EditProfileScreen(
-
                       currentName: name,
                       currentEmail: email,
                       currentPhone: phone,
@@ -246,7 +302,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
 
                 if (result == true) {
-                  fetchProfile();
+                  _fetchProfile();
                 }
               },
             ),

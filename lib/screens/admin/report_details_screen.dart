@@ -357,7 +357,8 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                                 BorderRadius.circular(16),
 
                             child: SizedBox(
-                              height: 220,
+                              height: 250,
+                               width: double.infinity,
 
                               child: GoogleMap(
 
