@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'about_app_screen.dart';
+// import 'about_app_screen.dart';
 import 'edit_profile_screen.dart';
 import 'login_screen.dart';
 import 'help_support_screen.dart';
@@ -20,7 +20,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   String name = "";
   String email = "";
   String phone = "";
@@ -37,11 +36,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _fetchProfile() async {
-
     try {
-
-      SharedPreferences prefs =
-          await SharedPreferences.getInstance();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
       String? userId = prefs.getString("userId");
 
@@ -50,18 +46,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }
 
       final response = await http.get(
-        Uri.parse(
-          "https://crime-alert.onrender.com/api/users/profile/$userId",
-        ),
+        Uri.parse("https://crime-alert.onrender.com/api/users/profile/$userId"),
       );
 
       if (response.statusCode == 200) {
-
         final data = jsonDecode(response.body);
         print(data);
 
         setState(() {
-
           name = data["name"] ?? "";
           email = data["email"] ?? "";
           phone = data["phone"] ?? "";
@@ -69,9 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           isLoading = false;
         });
       }
-
     } catch (e) {
-
       print(e);
 
       setState(() {
@@ -79,10 +69,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
     }
   }
+
   Future<void> _getLocation() async {
     try {
-      bool serviceEnabled =
-          await Geolocator.isLocationServiceEnabled();
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
       if (!serviceEnabled) {
         setState(() {
@@ -91,12 +81,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return;
       }
 
-      LocationPermission permission =
-          await Geolocator.checkPermission();
+      LocationPermission permission = await Geolocator.checkPermission();
 
       if (permission == LocationPermission.denied) {
-        permission =
-            await Geolocator.requestPermission();
+        permission = await Geolocator.requestPermission();
       }
 
       if (permission == LocationPermission.denied ||
@@ -107,13 +95,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return;
       }
 
-      Position position =
-          await Geolocator.getCurrentPosition(
+      Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
 
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(
+      List<Placemark> placemarks = await placemarkFromCoordinates(
         position.latitude,
         position.longitude,
       );
@@ -121,8 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       Placemark place = placemarks.first;
 
       setState(() {
-        location =
-            "${place.locality ?? ''}, ${place.administrativeArea ?? ''}";
+        location = "${place.locality ?? ''}, ${place.administrativeArea ?? ''}";
       });
     } catch (e) {
       setState(() {
@@ -133,13 +118,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     if (isLoading) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
@@ -150,29 +130,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Colors.white,
         title: const Text(
           'Profile',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Color(0xFF1E88E5)),
         ),
         centerTitle: true,
 
         actions: [
           Padding(
-            padding: const EdgeInsets.only(
-              right: 16,
-            ),
+            padding: const EdgeInsets.only(right: 16),
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        const SettingsScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => const SettingsScreen()),
                 );
               },
-              child: const Icon(
-                Icons.settings,
-                color: Colors.black,
-              ),
+              child: const Icon(Icons.settings, color: Color(0xFF1E88E5)),
             ),
           ),
         ],
@@ -183,13 +155,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
         child: Column(
           children: [
-
             // PROFILE CARD
             Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 24,
-                horizontal: 20,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
 
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -198,11 +166,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               child: Column(
                 children: [
-
                   // PROFILE IMAGE
                   Stack(
                     children: [
-
                       const CircleAvatar(
                         radius: 45,
                         backgroundColor: Color(0xFF1E88E5),
@@ -250,12 +216,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 4),
 
                   // EMAIL
-                  Text(
-                    email,
-                    style: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
+                  Text(email, style: const TextStyle(color: Colors.grey)),
 
                   const SizedBox(height: 20),
 
@@ -263,17 +224,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      _infoItem(Icons.phone, phone),
 
-                      _infoItem(
-                        Icons.phone,
-                        phone,
-                      ),
-
-                      _infoItem(
-                        Icons.location_on,
-                        location,
-                      ),
-                      
+                      _infoItem(Icons.location_on, location),
                     ],
                   ),
                 ],
@@ -288,16 +241,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: 'Edit Profile',
               onTap: () async {
                 final result = await Navigator.push(
-
                   context,
 
                   MaterialPageRoute(
-
-                    builder: (_) => EditProfileScreen(
-                      currentName: name,
-                      currentEmail: email,
-                      currentPhone: phone,
-                    ),
+                    builder:
+                        (_) => EditProfileScreen(
+                          currentName: name,
+                          currentEmail: email,
+                          currentPhone: phone,
+                        ),
                   ),
                 );
 
@@ -312,12 +264,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: 'Change Password',
               onTap: () {
                 Navigator.push(
-
                   context,
 
                   MaterialPageRoute(
-                    builder: (_) =>
-                        const ChangePasswordScreen(),
+                    builder: (_) => const ChangePasswordScreen(),
                   ),
                 );
               },
@@ -328,19 +278,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //   title: 'Notifications',
             //   onTap: () {},
             // ),
-
             _profileOption(
               icon: Icons.help_outline,
               title: 'Help & Support',
               onTap: () {
                 Navigator.push(
-
                   context,
 
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        const HelpSupportScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => const HelpSupportScreen()),
                 );
               },
             ),
@@ -364,17 +309,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               iconColor: Colors.red,
 
               onTap: () async {
-
-                SharedPreferences prefs =
-                    await SharedPreferences.getInstance();
+                SharedPreferences prefs = await SharedPreferences.getInstance();
 
                 await prefs.clear();
 
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => const LoginScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => const LoginScreen()),
                   (route) => false,
                 );
               },
@@ -404,23 +345,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         leading: CircleAvatar(
           backgroundColor: iconColor.withOpacity(0.1),
 
-          child: Icon(
-            icon,
-            color: iconColor,
-          ),
+          child: Icon(icon, color: iconColor),
         ),
 
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
 
-        trailing: const Icon(
-          Icons.arrow_forward_ios,
-          size: 16,
-        ),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
 
         onTap: onTap,
       ),
@@ -428,28 +358,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // USER INFO WIDGET
-  Widget _infoItem(
-    IconData icon,
-    String text,
-  ) {
+  Widget _infoItem(IconData icon, String text) {
     return Row(
       children: [
-
-        Icon(
-          icon,
-          size: 18,
-          color: Colors.blue,
-        ),
+        Icon(icon, size: 18, color: Colors.blue),
 
         const SizedBox(width: 6),
 
-        Text(
-          text,
-          style: const TextStyle(
-            fontSize: 13,
-            color: Colors.grey,
-          ),
-        ),
+        Text(text, style: const TextStyle(fontSize: 13, color: Colors.grey)),
       ],
     );
   }

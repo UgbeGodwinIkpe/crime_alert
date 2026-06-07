@@ -20,13 +20,13 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   int resolvedReports = 0;
   int investigatingReports = 0;
   bool isLoading = true;
-  
+
   @override
   void initState() {
     super.initState();
     loadDashboard();
   }
-  
+
   Future<void> loadDashboard() async {
     try {
       final response = await http.get(
@@ -54,127 +54,95 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
-     if (isLoading) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
+    if (isLoading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
     return Scaffold(
       backgroundColor: const Color(0xFFF5F8FC),
       appBar: AppBar(
-        title: const Text("Admin Dashboard", style: TextStyle(
-            color: Colors.black,
+        title: const Text(
+          "Admin Dashboard",
+          style: TextStyle(
+            color: Color(0xFF1E88E5),
             fontWeight: FontWeight.bold,
-          ),),
+          ),
+        ),
 
         actions: [
-
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: const Icon(Icons.logout, color: Color(0xFF1E88E5)),
 
             onPressed: () {
-
               showDialog(
                 context: context,
 
-                builder: (_) => AlertDialog(
+                builder:
+                    (_) => AlertDialog(
+                      title: const Text("Logout"),
 
-                  title: const Text(
-                    "Logout",
-                  ),
+                      content: const Text("Are you sure you want to logout?"),
 
-                  content: const Text(
-                    "Are you sure you want to logout?",
-                  ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
 
-                  actions: [
+                          child: const Text("Cancel"),
+                        ),
 
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushAndRemoveUntil(
+                              context,
 
-                      child: const Text(
-                        "Cancel",
-                      ),
+                              MaterialPageRoute(
+                                builder: (_) => const LoginScreen(),
+                              ),
+
+                              (route) => false,
+                            );
+                          },
+
+                          child: const Text("Logout"),
+                        ),
+                      ],
                     ),
-
-                    TextButton(
-                      onPressed: () {
-
-                        Navigator.pushAndRemoveUntil(
-                          context,
-
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                const LoginScreen(),
-                          ),
-
-                          (route) => false,
-                        );
-                      },
-
-                      child: const Text(
-                        "Logout",
-                      ),
-                    ),
-                  ],
-                ),
               );
             },
           ),
         ],
       ),
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.white,
-
-      //   title: const Text(
-      //     "Admin Dashboard",
-      //     style: TextStyle(
-      //       color: Colors.black,
-      //       fontWeight: FontWeight.bold,
-      //     ),
-      //   ),
-      // ),
 
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
 
         child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-
             // HEADER
             Container(
               padding: const EdgeInsets.all(20),
 
               decoration: BoxDecoration(
                 color: const Color(0xFF1E88E5),
-                borderRadius:
-                    BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(24),
               ),
 
               child: const Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
-
                   Text(
-                    "Welcome Admin 👋",
+                    "Welcome Admin",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
-                      fontWeight:
-                          FontWeight.bold,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
 
@@ -182,9 +150,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
                   Text(
                     "Crime Alert Management System",
-                    style: TextStyle(
-                      color: Colors.white70,
-                    ),
+                    style: TextStyle(color: Colors.white70),
                   ),
                 ],
               ),
@@ -194,10 +160,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
             const Text(
               "System Statistics",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 15),
@@ -205,8 +168,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             GridView.count(
               shrinkWrap: true,
 
-              physics:
-                  const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
 
               crossAxisCount: 2,
 
@@ -214,7 +176,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               mainAxisSpacing: 16,
 
               children: [
-
                 statCard(
                   title: "Users",
                   value: "$totalUsers",
@@ -249,10 +210,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
             const Text(
               "Quick Actions",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 15),
@@ -264,8 +222,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) =>
-                        const ManageReportsScreen(),
+                    builder: (_) => const ManageReportsScreen(),
                   ),
                 );
               },
@@ -277,10 +234,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        const ManageUsersScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => const ManageUsersScreen()),
                 );
               },
             ),
@@ -291,10 +245,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        const AnalyticsScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => const AnalyticsScreen()),
                 );
               },
             ),
@@ -310,109 +261,73 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     required IconData icon,
     required Color color,
   }) {
-
     return Container(
       padding: const EdgeInsets.all(20),
 
       decoration: BoxDecoration(
         color: Colors.white,
 
-        borderRadius:
-            BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20),
 
         boxShadow: [
-          BoxShadow(
-            color:
-                Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-          ),
+          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),
         ],
       ),
 
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
-
           CircleAvatar(
-            backgroundColor:
-                color.withOpacity(0.15),
+            backgroundColor: color.withOpacity(0.15),
 
-            child: Icon(
-              icon,
-              color: color,
-            ),
+            child: Icon(icon, color: color),
           ),
 
           const Spacer(),
 
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight:
-                  FontWeight.bold,
-            ),
+            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
 
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.grey,
-            ),
-          ),
+          Text(title, style: const TextStyle(color: Colors.grey)),
         ],
       ),
     );
   }
+
   Widget dashboardAction({
-      required String title,
-      required IconData icon,
-      required VoidCallback onTap,
-    }) {
+    required String title,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
 
-      return Container(
-        margin:
-            const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
 
-        decoration: BoxDecoration(
-          color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
 
-          borderRadius:
-              BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8),
+        ],
+      ),
 
-          boxShadow: [
-            BoxShadow(
-              color:
-                  Colors.black.withOpacity(0.05),
-              blurRadius: 8,
-            ),
-          ],
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: const Color(0xFF1E88E5).withOpacity(0.1),
+
+          child: Icon(icon, color: const Color(0xFF1E88E5)),
         ),
 
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor:
-                const Color(0xFF1E88E5)
-                    .withOpacity(0.1),
+        title: Text(title),
 
-            child: Icon(
-              icon,
-              color: const Color(0xFF1E88E5),
-            ),
-          ),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
 
-          title: Text(title),
-
-          trailing: const Icon(
-            Icons.arrow_forward_ios,
-            size: 16,
-          ),
-
-          onTap: onTap,
-        ),
-      );
-    }
-
+        onTap: onTap,
+      ),
+    );
+  }
 }

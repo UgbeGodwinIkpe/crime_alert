@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'report_details_screen.dart';
+
 class ManageReportsScreen extends StatefulWidget {
   const ManageReportsScreen({super.key});
 
@@ -11,7 +12,6 @@ class ManageReportsScreen extends StatefulWidget {
 }
 
 class _ManageReportsScreenState extends State<ManageReportsScreen> {
-
   List reports = [];
 
   bool isLoading = true;
@@ -23,29 +23,20 @@ class _ManageReportsScreenState extends State<ManageReportsScreen> {
   }
 
   Future<void> fetchReports() async {
-
     try {
-
       final response = await http.get(
-
-        Uri.parse(
-          "https://crime-alert.onrender.com/api/reports/all",
-        ),
+        Uri.parse("https://crime-alert.onrender.com/api/reports/all"),
       );
 
       if (response.statusCode == 200) {
-
         setState(() {
-
           reports = jsonDecode(response.body);
 
           isLoading = false;
         });
       }
-      // print(reports);
-
+      print(reports);
     } catch (e) {
-
       print(e);
 
       setState(() {
@@ -55,9 +46,7 @@ class _ManageReportsScreenState extends State<ManageReportsScreen> {
   }
 
   Color statusColor(String status) {
-
     switch (status) {
-
       case "Resolved":
         return Colors.green;
 
@@ -74,98 +63,58 @@ class _ManageReportsScreenState extends State<ManageReportsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+      appBar: AppBar(title: const Text("Manage Reports")),
 
-      appBar: AppBar(
-        title: const Text(
-          "Manage Reports",
-        ),
-      ),
+      body:
+          isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                itemCount: reports.length,
 
-      body: isLoading
+                itemBuilder: (context, index) {
+                  final report = reports[index];
 
-          ? const Center(
-              child:
-                  CircularProgressIndicator(),
-            )
+                  return Card(
+                    margin: const EdgeInsets.all(10),
 
-          : ListView.builder(
+                    child: ListTile(
+                      title: Text(report["title"] ?? "Crime Report"),
 
-              itemCount: reports.length,
+                      subtitle: Text(report["description"] ?? "", maxLines: 2),
 
-              itemBuilder: (context, index) {
+                      trailing: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
 
-                final report =
-                    reports[index];
+                        decoration: BoxDecoration(
+                          color: statusColor(report["status"]),
 
-                return Card(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
 
-                  margin:
-                      const EdgeInsets.all(10),
-
-                  child: ListTile(
-
-                    title: Text(
-                      report["title"] ??
-                          "Crime Report",
-                    ),
-
-                    subtitle: Text(
-                      report["description"] ??
-                          "",
-                      maxLines: 2,
-                    ),
-
-                    trailing: Container(
-
-                      padding:
-                          const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
-
-                      decoration: BoxDecoration(
-
-                        color: statusColor(
+                        child: Text(
                           report["status"],
-                        ),
 
-                        borderRadius:
-                            BorderRadius.circular(
-                          20,
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ),
 
-                      child: Text(
+                      onTap: () {
+                        Navigator.push(
+                          context,
 
-                        report["status"],
-
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-
-                    onTap: () {
-
-                      Navigator.push(
-
-                        context,
-
-                        MaterialPageRoute(
-
-                          builder: (_) =>
-                              ReportDetailsScreen(
-                            report: report,
+                          MaterialPageRoute(
+                            builder: (_) => ReportDetailsScreen(report: report),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
     );
   }
 }

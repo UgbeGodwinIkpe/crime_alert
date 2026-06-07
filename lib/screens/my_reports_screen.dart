@@ -66,88 +66,92 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
         title: const Text(
           'My Reports',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Color(0xFF1E88E5)),
         ),
       ),
 
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : reports.isEmpty
+      body:
+          isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : reports.isEmpty
               ? const Center(child: Text("No reports yet"))
               : Column(
-                  children: [
-                    // 🔥 REPORT LIST
-                    Container(
-                      margin: const EdgeInsets.all(16),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        children: reports.map((report) {
-                          return Column(
-                            children: [
-                              _ReportItem(
-                                
-                                title: report["title"] ?? "No Title",
-                                address: report["location"]?["address"] ??
-                                    "Unknown",
-                                status: report["status"] ?? "Pending",
-                                statusColor:
-                                    getStatusColor(report["status"]),
-                                statusTextColor:
-                                    getStatusTextColor(report["status"]),
-                                iconColor: Colors.blue,
-                                date: report["createdAt"] != null
-                                    ? report["createdAt"]
-                                        .substring(0, 10)
-                                    : null,
-                                onDelete: () async {
-                                  bool success = await ApiService.deleteReport(report["_id"]);
-
-                                  if (success) {
-                                    _fetchReports(); // refresh list
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text("Report withdrawn")),
-                                    );
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text("Failed to withdraw")),
-                                    );
-                                  }
-                                },
-                              ),
-                              const Divider(),
-                            ],
-                          );
-                        }).toList(),
-                      ),
+                children: [
+                  // 🔥 REPORT LIST
+                  Container(
+                    margin: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
                     ),
+                    child: Column(
+                      children:
+                          reports.map((report) {
+                            return Column(
+                              children: [
+                                _ReportItem(
+                                  title: report["title"] ?? "No Title",
+                                  address:
+                                      report["location"]?["address"] ??
+                                      "Unknown",
+                                  status: report["status"] ?? "Pending",
+                                  statusColor: getStatusColor(report["status"]),
+                                  statusTextColor: getStatusTextColor(
+                                    report["status"],
+                                  ),
+                                  iconColor: Colors.blue,
+                                  date: report["createdAt"]?.substring(0, 10),
+                                  onDelete: () async {
+                                    bool success =
+                                        await ApiService.deleteReport(
+                                          report["_id"],
+                                        );
 
-                    // Map preview
-                    Expanded(
-                      child: Container(
-                        margin:
-                            const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          image: const DecorationImage(
-                            image:
-                                AssetImage('assets/map_preview.png'),
-                            fit: BoxFit.cover,
-                          ),
+                                    if (success) {
+                                      _fetchReports(); // refresh list
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text("Report withdrawn"),
+                                        ),
+                                      );
+                                    } else {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text("Failed to withdraw"),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                                const Divider(),
+                              ],
+                            );
+                          }).toList(),
+                    ),
+                  ),
+
+                  // Map preview
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/map_preview.png'),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
     );
   }
 }
@@ -170,14 +174,13 @@ class _ReportItem extends StatelessWidget {
     required this.statusTextColor,
     required this.iconColor,
     this.date,
-    this.onDelete
+    this.onDelete,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
           CircleAvatar(
@@ -201,10 +204,7 @@ class _ReportItem extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   address,
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12,
-                  ),
+                  style: const TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ],
             ),
@@ -215,27 +215,23 @@ class _ReportItem extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 10, vertical: 4),
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: statusColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   status,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: statusTextColor,
-                  ),
+                  style: TextStyle(fontSize: 12, color: statusTextColor),
                 ),
               ),
               if (date != null) ...[
                 const SizedBox(height: 6),
                 Text(
                   date!,
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: Colors.grey,
-                  ),
+                  style: const TextStyle(fontSize: 11, color: Colors.grey),
                 ),
               ],
               if (onDelete != null) ...[

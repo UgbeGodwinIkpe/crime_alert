@@ -87,14 +87,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(color: Colors.white)),
                 ),
               ),
-
-              // TextButton(
-              //   onPressed: () {},
-              //   child: const Text(
-              //     "Report Anonymously",
-              //     style: TextStyle(color: Color(0xFFE53935)),
-              //   ),
-              // ),
             ],
           ),
         ),
