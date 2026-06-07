@@ -32,10 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFE3F2FD),
-              Color(0xFFBBDEFB),
-            ],
+            colors: [Color(0xFFE3F2FD), Color(0xFFBBDEFB)],
           ),
         ),
         child: Column(
@@ -43,36 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
             const Spacer(flex: 2),
 
             // Logo
-            Image.asset(
-              'assets/logo.png',
-              height: 220,
-            ),
-
-            // const SizedBox(height: 16),
-
-            // App Name
-            // RichText(
-            //   text: const TextSpan(
-            //     children: [
-            //       TextSpan(
-            //         text: 'Crime',
-            //         style: TextStyle(
-            //           fontSize: 28,
-            //           fontWeight: FontWeight.bold,
-            //           color: Color(0xFF1E88E5),
-            //         ),
-            //       ),
-            //       TextSpan(
-            //         text: 'Alert',
-            //         style: TextStyle(
-            //           fontSize: 28,
-            //           fontWeight: FontWeight.bold,
-            //           color: Color(0xFFE53935),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            Image.asset('assets/logo.png', height: 220),
 
             const Spacer(flex: 3),
 
@@ -81,10 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
               padding: EdgeInsets.only(bottom: 40),
               child: Text(
                 'Loading...',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 24,
-                ),
+                style: TextStyle(color: Colors.grey, fontSize: 24),
               ),
             ),
           ],

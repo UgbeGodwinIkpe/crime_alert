@@ -6,13 +6,10 @@ class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() =>
-      _SettingsScreenState();
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState
-    extends State<SettingsScreen> {
-
+class _SettingsScreenState extends State<SettingsScreen> {
   bool notificationsEnabled = true;
   // bool darkModeEnabled = false;
   bool locationEnabled = true;
@@ -22,38 +19,33 @@ class _SettingsScreenState
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
-
       backgroundColor: const Color(0xFFF5F8FC),
 
       appBar: AppBar(
         title: const Text(
           "Settings",
+          style: TextStyle(color: Color(0xFF1E88E5)),
         ),
         centerTitle: true,
       ),
 
       body: SingleChildScrollView(
-
         padding: const EdgeInsets.all(16),
 
         child: Column(
           children: [
-
             // GENERAL SETTINGS
             _sectionTitle("General"),
 
             _switchTile(
               title: "Notifications",
-              subtitle:
-                  "Enable app notifications",
+              subtitle: "Enable app notifications",
 
               value: notificationsEnabled,
 
               onChanged: (value) {
-
                 setState(() {
-                  notificationsEnabled =
-                      value;
+                  notificationsEnabled = value;
                 });
               },
 
@@ -62,17 +54,12 @@ class _SettingsScreenState
 
             _switchTile(
               title: "Dark Mode",
-              subtitle:
-                  "Enable dark theme",
+              subtitle: "Enable dark theme",
 
-              value:
-                  themeProvider.isDarkMode,
+              value: themeProvider.isDarkMode,
 
               onChanged: (value) {
-
-                themeProvider.toggleTheme(
-                  value,
-                );
+                themeProvider.toggleTheme(value);
               },
 
               icon: Icons.dark_mode,
@@ -80,16 +67,13 @@ class _SettingsScreenState
 
             _switchTile(
               title: "Location Services",
-              subtitle:
-                  "Allow location access",
+              subtitle: "Allow location access",
 
               value: locationEnabled,
 
               onChanged: (value) {
-
                 setState(() {
-                  locationEnabled =
-                      value;
+                  locationEnabled = value;
                 });
               },
 
@@ -104,16 +88,14 @@ class _SettingsScreenState
             _settingsTile(
               icon: Icons.lock,
               title: "Privacy Policy",
-              subtitle:
-                  "Read privacy policy",
+              subtitle: "Read privacy policy",
               onTap: () {},
             ),
 
             _settingsTile(
               icon: Icons.security,
               title: "Security",
-              subtitle:
-                  "Manage account security",
+              subtitle: "Manage account security",
               onTap: () {},
             ),
 
@@ -125,16 +107,14 @@ class _SettingsScreenState
             _settingsTile(
               icon: Icons.language,
               title: "Language",
-              subtitle:
-                  "English",
+              subtitle: "English",
               onTap: () {},
             ),
 
             _settingsTile(
               icon: Icons.info_outline,
               title: "About App",
-              subtitle:
-                  "Crime Alert v1.0.0",
+              subtitle: "Crime Alert v1.0.0",
               onTap: () {},
             ),
 
@@ -145,44 +125,27 @@ class _SettingsScreenState
               width: double.infinity,
 
               child: ElevatedButton(
-
                 onPressed: () {
-
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(
-
+                  ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text(
-                        "Settings saved successfully",
-                      ),
+                      content: Text("Settings saved successfully"),
                     ),
                   );
                 },
 
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      Colors.blue,
+                  backgroundColor: Colors.blue,
 
-                  padding:
-                      const EdgeInsets.symmetric(
-                    vertical: 15,
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
 
-                  shape:
-                      RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(
-                      14,
-                    ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
                   ),
                 ),
 
                 child: const Text(
                   "Save Settings",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
             ),
@@ -194,25 +157,16 @@ class _SettingsScreenState
 
   // SECTION TITLE
   Widget _sectionTitle(String title) {
-
     return Padding(
-
-      padding: const EdgeInsets.only(
-        bottom: 12,
-      ),
+      padding: const EdgeInsets.only(bottom: 12),
 
       child: Align(
-        alignment:
-            Alignment.centerLeft,
+        alignment: Alignment.centerLeft,
 
         child: Text(
           title,
 
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight:
-                FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -226,41 +180,25 @@ class _SettingsScreenState
     required Function(bool) onChanged,
     required IconData icon,
   }) {
-
     return Container(
-
-      margin: const EdgeInsets.only(
-        bottom: 12,
-      ),
+      margin: const EdgeInsets.only(bottom: 12),
 
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(15),
       ),
 
       child: SwitchListTile(
-
         value: value,
         onChanged: onChanged,
 
         secondary: CircleAvatar(
-          backgroundColor:
-              Colors.blue.withOpacity(0.1),
+          backgroundColor: Colors.blue.withOpacity(0.1),
 
-          child: Icon(
-            icon,
-            color: Colors.blue,
-          ),
+          child: Icon(icon, color: Colors.blue),
         ),
 
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontWeight:
-                FontWeight.w600,
-          ),
-        ),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
 
         subtitle: Text(subtitle),
       ),
@@ -274,47 +212,28 @@ class _SettingsScreenState
     required String subtitle,
     required VoidCallback onTap,
   }) {
-
     return Container(
-
-      margin: const EdgeInsets.only(
-        bottom: 12,
-      ),
+      margin: const EdgeInsets.only(bottom: 12),
 
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(15),
       ),
 
       child: ListTile(
-
         onTap: onTap,
 
         leading: CircleAvatar(
-          backgroundColor:
-              Colors.blue.withOpacity(0.1),
+          backgroundColor: Colors.blue.withOpacity(0.1),
 
-          child: Icon(
-            icon,
-            color: Colors.blue,
-          ),
+          child: Icon(icon, color: Colors.blue),
         ),
 
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontWeight:
-                FontWeight.w600,
-          ),
-        ),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
 
         subtitle: Text(subtitle),
 
-        trailing: const Icon(
-          Icons.arrow_forward_ios,
-          size: 16,
-        ),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
       ),
     );
   }
