@@ -142,33 +142,6 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // HERO IMAGE
-            // Container(
-            //   margin: const EdgeInsets.all(16),
-
-            //   height: 250,
-
-            //   width: double.infinity,
-
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(24),
-            //     image:
-            //         report["image"] != null
-            //             ? DecorationImage(
-            //               image: NetworkImage(
-            //                 'https://crime-alert.onrender.com/${report["image"]}',
-            //               ),
-            //               fit: BoxFit.cover,
-            //             )
-            //             : null,
-            //     color: Colors.grey.shade200,
-            //   ),
-
-            //   child:
-            //       report["image"] == null
-            //           ? const Center(child: Icon(Icons.image, size: 80))
-            //           : null,
-            // ),
             // HERO MEDIA (IMAGE + VIDEO)
             Container(
               margin: const EdgeInsets.all(16),
