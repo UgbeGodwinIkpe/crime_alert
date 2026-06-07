@@ -5,7 +5,6 @@ import '../services/api_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
-
 class ReportCrimeScreen extends StatefulWidget {
   const ReportCrimeScreen({super.key});
 
@@ -21,8 +20,7 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
   String currentAddress = "Fetching location...";
   double? latitude;
   double? longitude;
-  final TextEditingController descriptionController =
-      TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   bool isLoading = false;
 
@@ -33,10 +31,10 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
     super.initState();
     _getLocation();
   }
+
   // 🔹 PICK IMAGE
   Future<void> _pickImage() async {
-    final pickedFile =
-        await _picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
@@ -68,7 +66,7 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
       );
 
       if (success) {
-        _showMessage("Report submitted successfully ✅");
+        _showMessage("Report submitted successfully");
 
         // Reset form
         setState(() {
@@ -81,7 +79,7 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
         _showMessage("Failed to submit report");
       }
     } catch (e) {
-      _showMessage("Error submitting report");
+      _showMessage("Error submitting report ");
     }
 
     setState(() {
@@ -91,9 +89,9 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
 
   // 🔹 SNACKBAR
   void _showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   final List<String> crimeTypes = [
@@ -147,7 +145,7 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
     'FCT Police Command Headquarters',
     'Jikwoyi Police Station',
   ];
-  
+
   Future<void> _getLocation() async {
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -182,21 +180,22 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
       latitude = position.latitude;
       longitude = position.longitude;
 
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(latitude!, longitude!);
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        latitude!,
+        longitude!,
+      );
 
       Placemark place = placemarks[0];
 
       setState(() {
-        currentAddress =
-            "${place.street}, ${place.locality}, ${place.country}";
+        currentAddress = "${place.street}, ${place.locality}, ${place.country}";
       });
-
     } catch (e) {
-      print({"errr":e});
-      _showMessage("Error getting location");
+      print({"error": e});
+      _showMessage("Error getting location $e");
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -227,21 +226,25 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Crime Type',
-                      style: TextStyle(fontWeight: FontWeight.w600)),
+                  const Text(
+                    'Crime Type',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                   const SizedBox(height: 8),
 
                   DropdownButtonFormField<String>(
                     value: selectedCrime,
                     hint: const Text('Select Crime Type'),
-                    items: crimeTypes
-                        .map((crime) => DropdownMenuItem(
-                              value: crime,
-                              child: Text(crime),
-                            ))
-                        .toList(),
-                    onChanged: (value) =>
-                        setState(() => selectedCrime = value),
+                    items:
+                        crimeTypes
+                            .map(
+                              (crime) => DropdownMenuItem(
+                                value: crime,
+                                child: Text(crime),
+                              ),
+                            )
+                            .toList(),
+                    onChanged: (value) => setState(() => selectedCrime = value),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -251,8 +254,10 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
 
                   const SizedBox(height: 16),
 
-                  const Text('Description',
-                      style: TextStyle(fontWeight: FontWeight.w600)),
+                  const Text(
+                    'Description',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                   const SizedBox(height: 8),
 
                   TextFormField(
@@ -268,21 +273,27 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
 
                   const SizedBox(height: 16),
 
-                  const Text('Nearest Police Station',
-                      style: TextStyle(fontWeight: FontWeight.w600)),
+                  const Text(
+                    'Nearest Police Station',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                   const SizedBox(height: 8),
 
                   DropdownButtonFormField<String>(
                     value: selectedPoliceStation,
                     hint: const Text('Select nearest police station'),
-                    items: policeStations
-                        .map((station) => DropdownMenuItem(
-                              value: station,
-                              child: Text(station),
-                            ))
-                        .toList(),
-                    onChanged: (value) =>
-                        setState(() => selectedPoliceStation = value),
+                    items:
+                        policeStations
+                            .map(
+                              (station) => DropdownMenuItem(
+                                value: station,
+                                child: Text(station),
+                              ),
+                            )
+                            .toList(),
+                    onChanged:
+                        (value) =>
+                            setState(() => selectedPoliceStation = value),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -296,8 +307,7 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
-                      icon: const Icon(Icons.upload_file,
-                          color: Colors.white),
+                      icon: const Icon(Icons.upload_file, color: Colors.white),
                       label: const Text(
                         'Upload Photo/Video',
                         style: TextStyle(color: Colors.white),
@@ -305,8 +315,7 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
                       onPressed: _pickImage,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF1E88E5),
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 14),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -325,8 +334,7 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
 
                   // Anonymous
                   Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: const [
@@ -337,8 +345,7 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
                       ),
                       Switch(
                         value: anonymous,
-                        onChanged: (value) =>
-                            setState(() => anonymous = value),
+                        onChanged: (value) => setState(() => anonymous = value),
                       ),
                     ],
                   ),
@@ -371,20 +378,18 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
                 onPressed: isLoading ? null : _submitReport,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1E88E5),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                child: isLoading
-                    ? const CircularProgressIndicator(
-                        color: Colors.white)
-                    : const Text(
-                        'Submit Report',
-                        style: TextStyle(
-                            fontSize: 16, color: Colors.white),
-                      ),
+                child:
+                    isLoading
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text(
+                          'Submit Report',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
               ),
             ),
           ],

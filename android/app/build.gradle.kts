@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.crime_alert"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "29.0.13113456"
+    ndkVersion = "28.1.13356709"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
