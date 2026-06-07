@@ -14,21 +14,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String userName = "";
   Future<void> loadUserName() async {
-
-    SharedPreferences prefs =
-        await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
-
       userName = prefs.getString("userName") ?? "";
     });
   }
+
   @override
   void initState() {
     super.initState();
 
     loadUserName();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,16 +38,15 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: const Icon(Icons.arrow_back, color: Colors.black),
         title: Row(
           children: [
-            Image.asset(
-              'assets/logo.png',
-              height: 28,
-            ),
+            Image.asset('assets/logo.png', height: 28),
             const SizedBox(width: 8),
             const Text(
               'Crime Alert',
-              style: TextStyle(color: Color(0xFF1E88E5),
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Color(0xFF1E88E5),
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
@@ -69,18 +67,12 @@ class _HomeScreenState extends State<HomeScreen> {
             // Greeting
             Text(
               'Hello, $userName',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
             const Text(
               'Welcome to Crime Alert',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
+              style: TextStyle(fontSize: 14, color: Colors.grey),
             ),
 
             const SizedBox(height: 24),
@@ -93,9 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => const ReportCrimeScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => const ReportCrimeScreen()),
                 );
               },
             ),
@@ -110,9 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => const MyReportsScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => const MyReportsScreen()),
                 );
               },
             ),
@@ -120,19 +108,19 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 16),
 
             // Crime Map
-            _featureCard(
-              title: 'Crime Map',
-              icon: Icons.location_on,
-              background: const Color(0xFF1E88E5),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const CrimeMapScreen(),
-                  ),
-                );
-              },
-            ),
+            // _featureCard(
+            //   title: 'Crime Map',
+            //   icon: Icons.location_on,
+            //   background: const Color(0xFF1E88E5),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (_) => const CrimeMapScreen(),
+            //       ),
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),
@@ -174,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 140,
+        height: 180,
         width: double.infinity,
         decoration: BoxDecoration(
           color: background,
