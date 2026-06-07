@@ -70,5 +70,4 @@ crime-report-backend/node_modules/
 *.log
 
 # Uploaded Images
-crime-report-backend/uploads/*
 !crime-report-backend/uploads/.gitkeep
