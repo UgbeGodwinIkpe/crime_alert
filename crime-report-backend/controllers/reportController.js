@@ -1,5 +1,5 @@
 const Report = require("../models/Report");
-
+const path = require("path");
 // 🔹 CREATE REPORT
 exports.createReport = async (req, res) => {
   try {
@@ -8,11 +8,13 @@ exports.createReport = async (req, res) => {
 
     if (req.file) {
       const mime = req.file.mimetype;
+      const ext = path.extname(req.file.originalname).toLowerCase();
+      
       console.log({"Medial Mime Type": mime})
 
-      if (mime.startsWith("image/")) {
+      if (mime.startsWith("image/") || [".jpg", ".jpeg", ".png", ".webp"].includes(ext)) {
         mediaType = "image";
-      } else if (mime.startsWith("video/")) {
+      } else if (mime.startsWith("video/") || [".mp4", ".mov", ".avi"].includes(ext)) {
         mediaType = "video";
       } else {
         mediaType = "unknown";
