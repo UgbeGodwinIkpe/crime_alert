@@ -143,31 +143,45 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
         child: Column(
           children: [
             // HERO IMAGE
+            // Container(
+            //   margin: const EdgeInsets.all(16),
+
+            //   height: 250,
+
+            //   width: double.infinity,
+
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(24),
+            //     image:
+            //         report["image"] != null
+            //             ? DecorationImage(
+            //               image: NetworkImage(
+            //                 'https://crime-alert.onrender.com/${report["image"]}',
+            //               ),
+            //               fit: BoxFit.cover,
+            //             )
+            //             : null,
+            //     color: Colors.grey.shade200,
+            //   ),
+
+            //   child:
+            //       report["image"] == null
+            //           ? const Center(child: Icon(Icons.image, size: 80))
+            //           : null,
+            // ),
+            // HERO MEDIA (IMAGE + VIDEO)
             Container(
               margin: const EdgeInsets.all(16),
-
               height: 250,
-
               width: double.infinity,
-
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
-                image:
-                    report["image"] != null
-                        ? DecorationImage(
-                          image: NetworkImage(
-                            'https://crime-alert.onrender.com/${report["image"]}',
-                          ),
-                          fit: BoxFit.cover,
-                        )
-                        : null,
                 color: Colors.grey.shade200,
               ),
-
-              child:
-                  report["image"] == null
-                      ? const Center(child: Icon(Icons.image, size: 80))
-                      : null,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: _buildMedia(report),
+              ),
             ),
 
             Padding(
@@ -408,5 +422,57 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
         ),
       ),
     );
+  }
+
+  Widget _buildMedia(Map report) {
+    final mediaUrl = report["image"];
+    final mediaType = report["mediaType"];
+
+    if (mediaUrl == null) {
+      return const Center(child: Icon(Icons.image, size: 80));
+    }
+
+    final fullUrl = 'https://crime-alert.onrender.com/$mediaUrl';
+
+    // IMAGE
+    if (mediaType == "image") {
+      return Image.network(
+        fullUrl,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return const Center(child: Icon(Icons.broken_image, size: 80));
+        },
+      );
+    }
+
+    // VIDEO
+    if (mediaType == "video") {
+      return Stack(
+        children: [
+          Container(
+            color: Colors.black,
+            child: const Center(
+              child: Icon(
+                Icons.play_circle_fill,
+                size: 80,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: Center(
+              child: Icon(
+                Icons.play_arrow,
+                size: 60,
+                color: Colors.white.withOpacity(0.8),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    // UNKNOWN
+    return const Center(child: Icon(Icons.help_outline, size: 80));
   }
 }

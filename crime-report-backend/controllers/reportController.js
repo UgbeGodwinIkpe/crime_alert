@@ -4,6 +4,19 @@ const Report = require("../models/Report");
 exports.createReport = async (req, res) => {
   try {
     const { title, description, nearPoliceStation, address, latitude, longitude } = req.body;
+    let mediaType = null;
+
+    if (req.file) {
+      const mime = req.file.mimetype;
+
+      if (mime.startsWith("image/")) {
+        mediaType = "image";
+      } else if (mime.startsWith("video/")) {
+        mediaType = "video";
+      } else {
+        mediaType = "unknown";
+      }
+    }
 
     const report = new Report({
       user: req.user._id,
@@ -11,6 +24,7 @@ exports.createReport = async (req, res) => {
       description,
       nearPoliceStation,
       image: req.file ? req.file.path : null,
+      mediaType:mediaType,
       location: {
         address,
         latitude,
