@@ -20,7 +20,7 @@ const reportSchema = new mongoose.Schema(
     image: {
       type: String, // path to uploaded image
     },
-    mediaType:{type: String, default:"png"},
+    mediaType:{type: String, default:"image"},
     location: {
       address: String,
       latitude: Number,
