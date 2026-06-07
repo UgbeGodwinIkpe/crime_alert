@@ -26,14 +26,11 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState
     extends State<EditProfileScreen> {
 
-  final TextEditingController nameController =
-      TextEditingController();
+  final TextEditingController nameController = TextEditingController();
 
-  final TextEditingController emailController =
-      TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
-  final TextEditingController phoneController =
-      TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
 
   bool isLoading = false;
 

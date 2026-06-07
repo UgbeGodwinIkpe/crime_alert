@@ -108,12 +108,44 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
   ];
 
   final List<String> policeStations = [
-    'Kurudu police station',
-    'LifeCamp police station',
-    'Wuse police station',
-    'Garki police station',
-    'Kubwa police station',
-    'Gwarinpa police station',
+    'Apo Police Station',
+    'Asokoro Police Station',
+    'Bwari Police Station',
+    'Byazhin Police Station',
+    'Dakibiyu Police Station',
+    'Dawaki Police Station',
+    'Durumi Police Station',
+    'Galadimawa Police Station',
+    'Garki Police Station',
+    'Garki Area 10 Police Station',
+    'Gudu Police Station',
+    'Guzape Police Station',
+    'Gwagwalada Police Station',
+    'Gwarinpa Police Station',
+    'Jabi Police Station',
+    'Jahi Police Station',
+    'Kado Police Station',
+    'Karu Police Station',
+    'Karmo Police Station',
+    'Katampe Police Station',
+    'Kubwa Police Station',
+    'Kuje Police Station',
+    'Kurudu Police Station',
+    'Life Camp Police Station',
+    'Lugbe Police Station',
+    'Mabushi Police Station',
+    'Maitama Police Station',
+    'Mpape Police Station',
+    'Nyanya Police Station',
+    'Orozo Police Station',
+    'Utako Police Station',
+    'Wuye Police Station',
+    'Wuse Police Station',
+    'Wuse Zone 3 Police Station',
+    'Zuba Police Station',
+    'Zone 7 Police Headquarters',
+    'FCT Police Command Headquarters',
+    'Jikwoyi Police Station',
   ];
   
   Future<void> _getLocation() async {
@@ -129,10 +161,17 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
 
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
+
+        if (permission == LocationPermission.denied) {
+          _showMessage("Location permission denied");
+          return;
+        }
       }
 
       if (permission == LocationPermission.deniedForever) {
-        _showMessage("Location permission permanently denied");
+        _showMessage(
+          "Location permission permanently denied. Enable it in Settings.",
+        );
         return;
       }
 
