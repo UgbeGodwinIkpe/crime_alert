@@ -66,7 +66,7 @@ exports.loginUser = async (req, res) => {
 // 🔹 GENERATE TOKEN
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
+    expiresIn: "360d",
   });
 };
 

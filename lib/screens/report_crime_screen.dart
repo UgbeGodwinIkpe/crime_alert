@@ -32,7 +32,7 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
     _getLocation();
   }
 
-  // 🔹 PICK IMAGE
+  // PICK IMAGE
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
@@ -42,6 +42,20 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
       });
     }
   }
+
+  // Future<void> _pickImage() async {
+  //   try {
+  //     final pickedFile = await _picker.pickMedia();
+  //     if (!mounted) return;
+  //     if (pickedFile != null) {
+  //       setState(() {
+  //         _selectedImage = File(pickedFile.path);
+  //       });
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Picker error: $e");
+  //   }
+  // }
 
   // 🔹 SUBMIT REPORT
   Future<void> _submitReport() async {
@@ -309,7 +323,7 @@ class _ReportCrimeScreenState extends State<ReportCrimeScreen> {
                     child: ElevatedButton.icon(
                       icon: const Icon(Icons.upload_file, color: Colors.white),
                       label: const Text(
-                        'Upload Photo/Video',
+                        'Upload Evidence (if any)',
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: _pickImage,
