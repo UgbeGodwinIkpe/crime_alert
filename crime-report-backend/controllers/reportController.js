@@ -10,7 +10,7 @@ exports.createReport = async (req, res) => {
       const mime = req.file.mimetype;
       const ext = path.extname(req.file.originalname).toLowerCase();
       
-      console.log({"Medial Mime Type": mime})
+      // console.log({"Medial Mime Type": mime})
 
       if (mime.startsWith("image/") || [".jpg", ".jpeg", ".png", ".webp"].includes(ext)) {
         mediaType = "image";

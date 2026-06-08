@@ -14,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -35,10 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
               _inputField("Email", Icons.person, controller: emailController),
               const SizedBox(height: 16),
 
-              _inputField("Password", Icons.lock,
-                  controller: passwordController, obscure: true,
-                  obscureText: !isPasswordVisible,
-                  ),
+              _inputField(
+                "Password",
+                Icons.lock,
+                controller: passwordController,
+                obscure: true,
+                obscureText: !isPasswordVisible,
+              ),
 
               const SizedBox(height: 16),
 
@@ -54,10 +56,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   onPressed: isLoading ? null : _handleLogin,
-                  child: isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text("Login",
-                          style: TextStyle(color: Colors.white)),
+                  child:
+                      isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
                 ),
               ),
 
@@ -78,13 +83,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     // we’ll connect this later
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(
-                        builder: (_) => const SignupScreen(),
-                      ),
+                      MaterialPageRoute(builder: (_) => const SignupScreen()),
                     );
                   },
-                  child: const Text("Register",
-                      style: TextStyle(color: Colors.white)),
+                  child: const Text(
+                    "Register",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ],
@@ -94,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // 🔐 LOGIN FUNCTION
+  // LOGIN FUNCTION
   Future<void> _handleLogin() async {
     setState(() {
       isLoading = true;
@@ -108,36 +113,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (response.containsKey("token")) {
         await AuthService.saveToken(response["token"]);
-        SharedPreferences prefs =await SharedPreferences.getInstance();
+        SharedPreferences prefs = await SharedPreferences.getInstance();
 
-        prefs.setString(
-          "userId",
-          response["user"]["id"],
-        );
-        prefs.setString(
-          "userName",
-          response["user"]["name"],
-        );
-        prefs.setString(
-          "role",
-          response["user"]["role"],
-        );
+        await prefs.setString("userId", response["user"]["id"]);
+        await prefs.setString("userName", response["user"]["name"]);
+        await prefs.setString("role", response["user"]["role"]);
+        await prefs.setBool("isLoggedIn", true);
         String role = response["user"]["role"];
         // ✅ Navigate to main app
         if (role == "admin") {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-              builder: (_) =>
-                  const AdminDashboardScreen(),
-            ),
+            MaterialPageRoute(builder: (_) => const AdminDashboardScreen()),
           );
-        }else{
+        } else {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-              builder: (_) => const MainNavigation(),
-            ),
+            MaterialPageRoute(builder: (_) => const MainNavigation()),
           );
         }
       } else {
@@ -154,23 +146,25 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  Widget _inputField(String label, IconData icon,
-      {bool obscure = false, obscureText=false, required TextEditingController controller}) {
+  Widget _inputField(
+    String label,
+    IconData icon, {
+    bool obscure = false,
+    obscureText = false,
+    required TextEditingController controller,
+  }) {
     return TextField(
       controller: controller,
       obscureText: obscure,
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon,
-            color: const Color.fromARGB(255, 18, 2, 112)),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        prefixIcon: Icon(icon, color: const Color.fromARGB(255, 18, 2, 112)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
